@@ -1,5 +1,6 @@
-package com.example.microone;
+package com.example.microone.controller;
 
+import com.example.microone.model.Message;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,7 +12,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 @RequestMapping("/message-sender")
 class MessageController {
     private final WebClient webClient;
-
     public MessageController(WebClient.Builder webClientBuilder) {
         this.webClient = webClientBuilder.baseUrl("http://localhost:8080").build(); // предполагаем, что второй сервис находится на порту 8080
     }
@@ -26,4 +26,5 @@ class MessageController {
                 .bodyToMono(Message.class).block();
         return ResponseEntity.ok(response);
     }
+
 }

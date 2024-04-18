@@ -1,4 +1,4 @@
-package com.example.microone;
+package com.example.microone.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;

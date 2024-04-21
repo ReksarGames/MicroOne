@@ -4,8 +4,10 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -13,7 +15,7 @@ import java.util.UUID;
 @MappedSuperclass
 @AllArgsConstructor
 @NoArgsConstructor
-public class AbstractEntity {
+public class AbstractEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "UUID")
     @GenericGenerator(
@@ -21,14 +23,18 @@ public class AbstractEntity {
             strategy = "org.hibernate.id.UUIDGenerator"
     )
     @Column(name = "UUID", updatable = false, nullable = false)
-    private UUID UUID;
-
-    @Column(name = "created_At")
-    private LocalDateTime createdAt;
-
-    @Column(name = "updated_At")
-    private LocalDateTime updatedAt;
+    private UUID uuid;
 
     @Version
     private Long version = 0L;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_date", nullable = false, updatable = false)
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @CreationTimestamp
+    @Column(name = "updated_date", nullable = true)
+    private LocalDateTime updatedAt;
 }

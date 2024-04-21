@@ -1,19 +1,23 @@
 package com.example.microone.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "Message")
-@AllArgsConstructor
+@Builder
+@Data
 @NoArgsConstructor
-@Getter
-@Setter
+@AllArgsConstructor
+@Table(name = "Message")
 public class Message extends AbstractEntity {
-    private String text;
-    private String from;
+    @ManyToOne
+    @JoinColumn(name = "user_id") // Я правильно понял что senderId - это UserId?
+    private User sender;
+
+    @Column(name = "content") // Текст который мы отправляем
+    private String content;
+
+    @Column(name = "is_read")
+    private Boolean isRead;
 }

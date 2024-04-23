@@ -1,6 +1,9 @@
 package com.example.microone.controller;
 
+import com.example.microone.dto.MessageDTO;
 import com.example.microone.dto.TransactionalDTO;
+import com.example.microone.jpa.UserRepository;
+import com.example.microone.model.User;
 import com.example.microone.service.kafka.KafkaProducer;
 import com.example.microone.model.Message;
 import lombok.extern.slf4j.Slf4j;
@@ -12,22 +15,26 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/kafkaController")
 @Slf4j
 public class ProducerController {
     private final KafkaProducer kafkaProducer;
-
+    private final UserRepository userRepository;
     @Autowired
-    public ProducerController(KafkaProducer kafkaProducer) {
+    public ProducerController(KafkaProducer kafkaProducer, UserRepository userRepository) {
         this.kafkaProducer = kafkaProducer;
+        this.userRepository = userRepository;
     }
 
     @PostMapping("/kafka/send")
-    public ResponseEntity<Message> sendMessage(@RequestBody Message message) {
-        Message messageResponse = kafkaProducer.send(message);
+    public ResponseEntity<MessageDTO> sendMessage(@RequestBody MessageDTO request) {
+        MessageDTO messageResponse = kafkaProducer.send(request);
         log.info(messageResponse.getContent());
-        return ResponseEntity.ok(messageResponse);
+        return ResponseEntity.ok(request);
     }
     @PostMapping("/kafka/transfer")
     public ResponseEntity<String> transferToAnotherUser(@RequestBody TransactionalDTO transactionDTO) {

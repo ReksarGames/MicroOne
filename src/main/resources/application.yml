@@ -51,6 +51,11 @@ spring:
     admin:
       client-id: adminclient-1
       bootstrap-servers: localhost:9092
+      properties:
+        zookeeper.connect: localhost:2181
+#      interceptor:
+#        classes:
+#          org.apache.kafka.clients.producer.internals.ProducerInterceptors
       topics:
         - name: message
           partitions: 3
@@ -67,8 +72,6 @@ spring:
         - name: topic5
           partitions: 3
           replicas: 2
-
-
 
 server:
   port: 9000

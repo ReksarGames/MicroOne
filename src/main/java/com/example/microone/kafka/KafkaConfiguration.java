@@ -18,16 +18,6 @@ public class KafkaConfiguration {
     }
 
     @Bean
-    public NewTopic newTopic(){
-        try {
-            log.info("Creating a new topic 'message' with 1 partition and replication factor 1.");
-            return new NewTopic("message", 1, (short) 1);
-        } catch (Exception e) {
-            log.error("Failed to create new topic 'message': " + e.getMessage());
-            return null; // или обработать иначе
-        }
-    }
-    @Bean
     public List<NewTopic> createTopicList(){
         log.info("Starting to createTopic Kafka on the configuration properties");
 

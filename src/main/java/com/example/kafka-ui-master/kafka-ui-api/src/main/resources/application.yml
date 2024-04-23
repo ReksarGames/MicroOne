@@ -1,0 +1,32 @@
+auth:
+  type: DISABLED
+server:
+  port: 10000
+
+kafka:
+  clusters:
+    - name: local
+      bootstrapServers: localhost:9092
+
+management:
+  endpoint:
+    info:
+      enabled: true
+    health:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "info,health,prometheus"
+services:
+  kafka-ui:
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAP_SERVERS: kafka:9092
+logging:
+  level:
+    root: INFO
+    com.provectus: DEBUG
+    reactor.netty.http.server.AccessLog: INFO
+    org.hibernate.validator: WARN
+

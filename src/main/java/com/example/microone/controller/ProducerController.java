@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -34,6 +36,7 @@ public class ProducerController {
     public ResponseEntity<MessageDTO> sendMessage(@RequestBody MessageDTO request) {
         MessageDTO messageResponse = kafkaProducer.send(request);
         log.info(messageResponse.getContent());
+        
         return ResponseEntity.ok(request);
     }
     @PostMapping("/kafka/transfer")

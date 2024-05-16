@@ -23,8 +23,6 @@ import org.apache.kafka.common.serialization.StringSerializer;
 public class KafkaProducerConfig {
     @Value("${spring.kafka.admin.bootstrap-servers}")
     private String bootstrapServers;
-//    @Value("${spring.kafka.admin.interceptor.classes}")
-//    private List<Class<? extends ProducerInterceptor<?, ?>>> interceptorClasses;
 
     @Bean
     public KafkaTemplate<String,Object> kafkaTemplate(){
